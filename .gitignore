@@ -50,3 +50,4 @@ devenv.local.yaml
 # Syncthing
 .stfolder/
 *.sync-conflict-*
+*.tmp
