@@ -1,0 +1,13 @@
+[Unit]
+Description=TaskHerald Notification Service
+After=network.target
+
+[Service]
+Type=simple
+User=taskherald
+Environment=NTFY_TOPIC=taskherald
+ExecStart=/usr/local/bin/taskherald
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

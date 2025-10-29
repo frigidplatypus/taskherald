@@ -1,13 +1,13 @@
-# Implementation Plan: [FEATURE]
+# Implementation Plan: TaskHerald Notifications
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Branch**: `001-taskherald-notifications` | **Date**: 2025-10-29 | **Spec**: spec.md
 **Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
 
 **Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
 
 ## Summary
 
-[Extract from feature spec: primary requirement + technical approach from research]
+TaskHerald is a single Go binary systemd service that regularly checks Taskwarrior tasks for notification_date matches and sends ntfy.sh notifications. On startup, it sends summaries of missed notifications and logs task verification. Configuration via environment variables, tracks sent notifications in JSON file.
 
 ## Technical Context
 
@@ -17,15 +17,17 @@
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+## Technical Context
+
+**Language/Version**: Go 1.21  
+**Primary Dependencies**: ntfy client library for Go (NEEDS CLARIFICATION: which library, e.g., github.com/binwiederhier/ntfy)  
+**Storage**: Taskwarrior UDAs for tracking sent notifications  
+**Testing**: Go testing framework  
+**Target Platform**: Linux (systemd compatible)  
+**Project Type**: Single binary service  
+**Performance Goals**: Check tasks every 60s, send notifications within 5s of notification_date match  
+**Constraints**: Single user, least privilege, external network only to ntfy.sh  
+**Scale/Scope**: Handle <1000 active Taskwarrior tasks per user
 
 ## Constitution Check
 

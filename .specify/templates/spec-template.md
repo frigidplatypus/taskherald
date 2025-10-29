@@ -113,3 +113,14 @@
 - **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
 - **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
 - **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+
+## Constitution Alignment
+
+*GATE: Must verify compliance with TaskHerald Constitution v1.1.0 before finalizing spec.*
+
+- **Service Reliability**: [Describe how the feature ensures continuous systemd service operation and failure recovery]
+- **CLI Contract**: [Confirm all Taskwarrior interactions use `task` command with validation]
+- **Security**: [Detail measures for least privilege and protection of sensitive data]
+- **Observability**: [Specify logging with timestamps and actionable error reporting]
+- **Simplicity**: [Justify minimal feature scope and absence of unnecessary complexity]
+- **Deployment Constraints**: [Verify use of only Go, systemd, Taskwarrior CLI, and ntfy.sh; limit external network to ntfy.sh]

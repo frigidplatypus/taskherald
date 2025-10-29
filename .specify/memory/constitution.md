@@ -1,50 +1,60 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+Version change: 1.0.0 → 1.1.0
+Modified principles: None
+Added sections: None
+Removed sections: None
+Templates requiring updates:
+✅ plan-template.md (updated constitution gates)
+✅ spec-template.md (added constitution alignment section)
+✅ tasks-template.md (added principle-driven foundational tasks)
+⚠ commands/ (directory missing, manual check needed)
+Follow-up TODOs: RATIFICATION_DATE
+-->
+
+# TaskHerald Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Service Reliability
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+The service MUST run continuously as a systemd service and recover automatically from failures.
+Rationale: Ensures uninterrupted task management and user trust.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### CLI Contract
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+All interactions with Taskwarrior MUST use the `task` command, with strict input/output validation.
+Rationale: Guarantees compatibility and prevents data corruption.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Security
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+The service MUST operate with least privilege and never expose sensitive data.
+Rationale: Protects user privacy and system integrity.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### Observability
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+All actions MUST be logged with timestamps; errors MUST be reported and actionable.
+Rationale: Enables troubleshooting and accountability.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### Simplicity
+
+The codebase MUST remain minimal, with only essential features implemented.
+Rationale: Reduces maintenance burden and risk of bugs.
+
+## Deployment Constraints
+
+Only Go, systemd, Taskwarrior CLI, and ntfy.sh for notifications are permitted. External network access is limited to ntfy.sh.
+
+## Development Workflow
+
+All changes require local testing. Version must be bumped according to semantic versioning rules:
+
+- MAJOR: Breaking changes to principles or governance
+- MINOR: New principle/section added or expanded
+- PATCH: Clarifications or non-semantic refinements
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Amendments are made by direct edit to this file. Version bump per semantic rules. Compliance reviewed before each deployment.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.1.0 | **Ratified**: TODO(RATIFICATION_DATE): original adoption date unknown | **Last Amended**: 2025-10-29
