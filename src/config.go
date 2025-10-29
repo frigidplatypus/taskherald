@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -11,13 +12,11 @@ type Config struct {
 	NtfyServer         string
 	NtfyTopic          string
 	TaskHeraldInterval time.Duration
-	TaskHeraldStateFile string
 }
 
 func LoadConfig() (*Config, error) {
 	config := &Config{
-		NtfyServer:         getEnv("NTFY_SERVER", "https://ntfy.sh"),
-		TaskHeraldStateFile: getEnv("TASKHERALD_STATE_FILE", "/var/lib/taskherald/notifications.json"),
+		NtfyServer: ensureProtocol(getEnv("NTFY_SERVER", "https://ntfy.sh")),
 	}
 
 	// Set topic: use env var if set, otherwise generate random topic for default server
@@ -49,6 +48,13 @@ func getEnv(key, defaultValue string) string {
 		return value
 	}
 	return defaultValue
+}
+
+func ensureProtocol(url string) string {
+	if strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://") {
+		return url
+	}
+	return "https://" + url
 }
 
 func generateRandomAlphanumeric(length int) (string, error) {
