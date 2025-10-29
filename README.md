@@ -49,7 +49,8 @@ TaskHerald can be installed using Nix flakes with home-manager for declarative c
     services.taskherald = {
       enable = true;
       settings = {
-        ntfy_topic = "my-task-notifications";
+        ntfy_topic = "my-task-notifications";  # OR use ntfy_topic_file below
+        # ntfy_topic_file = "/path/to/secret/topic";  # Alternative: read from file
         ntfy_server = "https://ntfy.sh";  # Optional
         taskherald_interval = 60;          # Optional
       };
@@ -67,11 +68,13 @@ home-manager switch
 ### Option 2: Manual Installation
 
 1. Build the binary:
+
    ```bash
    go build -o taskherald ./src
    ```
 
 2. Install:
+
    ```bash
    sudo cp taskherald /usr/local/bin/
    sudo mkdir -p /var/lib/taskherald
@@ -92,11 +95,11 @@ TaskHerald is configured via environment variables. Set them in the systemd serv
 
 ### Environment Variables
 
-| Variable | Description | Default | Example |
-|----------|-------------|---------|---------|
-| `NTFY_SERVER` | URL of the ntfy server to send notifications to | `https://ntfy.sh` | `https://ntfy.example.com` |
-| `NTFY_TOPIC` | Default topic for notifications | `taskherald` (or `taskherald-RANDOM` for ntfy.sh) | `my-tasks` |
-| `TASKHERALD_INTERVAL` | How often to check for due tasks (in seconds) | `60` | `30` |
+| Variable              | Description                                     | Default                                           | Example                    |
+| --------------------- | ----------------------------------------------- | ------------------------------------------------- | -------------------------- |
+| `NTFY_SERVER`         | URL of the ntfy server to send notifications to | `https://ntfy.sh`                                 | `https://ntfy.example.com` |
+| `NTFY_TOPIC`          | Default topic for notifications                 | `taskherald` (or `taskherald-RANDOM` for ntfy.sh) | `my-tasks`                 |
+| `TASKHERALD_INTERVAL` | How often to check for due tasks (in seconds)   | `60`                                              | `30`                       |
 
 ### Setting Environment Variables
 

@@ -19,18 +19,27 @@ func LoadConfig() (*Config, error) {
 		NtfyServer: ensureProtocol(getEnv("NTFY_SERVER", "https://ntfy.sh")),
 	}
 
-	// Set topic: use env var if set, otherwise generate random topic for default server
-	topicEnv := os.Getenv("NTFY_TOPIC")
-	if topicEnv != "" {
-		config.NtfyTopic = topicEnv
-	} else if config.NtfyServer == "https://ntfy.sh" {
-		randomSuffix, err := generateRandomAlphanumeric(8)
+	// Set topic: check file first, then env var, then generate random topic for default server
+	topicFile := os.Getenv("NTFY_TOPIC_FILE")
+	if topicFile != "" {
+		topicBytes, err := os.ReadFile(topicFile)
 		if err != nil {
 			return nil, err
 		}
-		config.NtfyTopic = "taskherald-" + randomSuffix
+		config.NtfyTopic = strings.TrimSpace(string(topicBytes))
 	} else {
-		config.NtfyTopic = "taskherald"
+		topicEnv := os.Getenv("NTFY_TOPIC")
+		if topicEnv != "" {
+			config.NtfyTopic = topicEnv
+		} else if config.NtfyServer == "https://ntfy.sh" {
+			randomSuffix, err := generateRandomAlphanumeric(8)
+			if err != nil {
+				return nil, err
+			}
+			config.NtfyTopic = "taskherald-" + randomSuffix
+		} else {
+			config.NtfyTopic = "taskherald"
+		}
 	}
 
 	intervalStr := getEnv("TASKHERALD_INTERVAL", "60")

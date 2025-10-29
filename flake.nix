@@ -45,8 +45,15 @@
 
               settings = {
                 ntfy_topic = lib.mkOption {
-                  type = lib.types.str;
-                  description = "Ntfy topic for notifications";
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                  description = "Ntfy topic for notifications (mutually exclusive with ntfy_topic_file)";
+                };
+
+                ntfy_topic_file = lib.mkOption {
+                  type = lib.types.nullOr lib.types.path;
+                  default = null;
+                  description = "Path to file containing ntfy topic (mutually exclusive with ntfy_topic)";
                 };
 
                 ntfy_server = lib.mkOption {
@@ -64,6 +71,13 @@
             };
 
             config = lib.mkIf config.services.taskherald.enable {
+              assertions = [
+                {
+                  assertion = (config.services.taskherald.settings.ntfy_topic != null) != (config.services.taskherald.settings.ntfy_topic_file != null);
+                  message = "Exactly one of services.taskherald.settings.ntfy_topic or services.taskherald.settings.ntfy_topic_file must be set";
+                }
+              ];
+
               systemd.user.services.taskherald = {
                 Unit = {
                   Description = "TaskHerald notification service";
@@ -73,10 +87,17 @@
                 Service = {
                   Type = "simple";
                   ExecStart = "${self.packages.${pkgs.system}.taskherald}/bin/taskherald";
-                  Environment = [
-                    "NTFY_TOPIC=${config.services.taskherald.settings.ntfy_topic}"
-                    "NTFY_SERVER=${config.services.taskherald.settings.ntfy_server}"
-                    "TASKHERALD_INTERVAL=${toString config.services.taskherald.settings.taskherald_interval}"
+                  Environment = lib.mkMerge [
+                    [
+                      "NTFY_SERVER=${config.services.taskherald.settings.ntfy_server}"
+                      "TASKHERALD_INTERVAL=${toString config.services.taskherald.settings.taskherald_interval}"
+                    ]
+                    (lib.mkIf (config.services.taskherald.settings.ntfy_topic != null) [
+                      "NTFY_TOPIC=${config.services.taskherald.settings.ntfy_topic}"
+                    ])
+                    (lib.mkIf (config.services.taskherald.settings.ntfy_topic_file != null) [
+                      "NTFY_TOPIC_FILE=${config.services.taskherald.settings.ntfy_topic_file}"
+                    ])
                   ];
                   Restart = "always";
                 };

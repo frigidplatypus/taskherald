@@ -23,6 +23,7 @@ func main() {
 		fmt.Fprintf(flag.CommandLine.Output(), "  Environment Variables:\n")
 		fmt.Fprintf(flag.CommandLine.Output(), "    NTFY_SERVER        ntfy server URL (default: https://ntfy.sh)\n")
 		fmt.Fprintf(flag.CommandLine.Output(), "    NTFY_TOPIC         default topic (default: taskherald, or taskherald-RANDOM for ntfy.sh)\n")
+		fmt.Fprintf(flag.CommandLine.Output(), "    NTFY_TOPIC_FILE    path to file containing ntfy topic\n")
 		fmt.Fprintf(flag.CommandLine.Output(), "    TASKHERALD_INTERVAL check interval in seconds (default: 60)\n")
 		fmt.Fprintf(flag.CommandLine.Output(), "EXAMPLES:\n")
 		fmt.Fprintf(flag.CommandLine.Output(), "  taskherald                    # Start the service\n")
