@@ -3,24 +3,24 @@
 **Feature Branch**: `001-taskherald-notifications`  
 **Created**: 2025-10-29  
 **Status**: Draft  
-**Input**: User description: "Taskherald is a single user service that regularly retrieves a users taskwarrior tasks and sends notifications via ntfy.sh when a taskwarrior UDA (notification_date) is the current date/time.  It also has the following features:
+**Input**: User description: "Taskherald is a single user service that regularly retrieves a users taskwarrior tasks and sends notifications via ntfy.sh when a taskwarrior UDA (notification_date) is the current date/time. It also has the following features:
 
-- When a notification is sent the UDA taskherald_notified is updated with the current timestamp. 
-- When Taskherald starts and there are previously unsent messages with a notification_date, a summary message is sent.  The timespan of previously sent is no more than 7 days ago.
-- When Taskherald starts, it logs up to 10 tasks with a notification_date set to the console to verify the service can reach the local taskwarrior tasks.  If no tasks are found, that is logged as well.
+- When a notification is sent the UDA taskherald_notified is updated with the current timestamp.
+- When Taskherald starts and there are previously unsent messages with a notification_date, a summary message is sent. The timespan of previously sent is no more than 7 days ago.
+- When Taskherald starts, it logs up to 10 tasks with a notification_date set to the console to verify the service can reach the local taskwarrior tasks. If no tasks are found, that is logged as well.
 - A custom ntfy.sh server may be specified
 - A custom ntfy-topic may be specified
 - The UDA ntfy_topic can be set on a task to override the topic the message will be delivered to for that task
 - The interval at with "task export" runs is 60s
-- Taskherald does not retry sending failed messages.  It is logged."
+- Taskherald does not retry sending failed messages. It is logged."
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 <!--
   IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
   Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
   you should still have a viable MVP (Minimum Viable Product) that delivers value.
-  
+
   Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
   Think of each story as a standalone slice of functionality that can be:
   - Developed independently
@@ -112,7 +112,7 @@ As a user, I want to configure custom ntfy.sh server and default topic, so that 
 - What happens if multiple tasks have the same notification_date?
 - What happens if notification_date is in the future?
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 <!--
   ACTION REQUIRED: The content in this section represents placeholders.
@@ -133,11 +133,11 @@ As a user, I want to configure custom ntfy.sh server and default topic, so that 
 - **FR-010**: System MUST read configuration from environment variables: NTFY_SERVER, NTFY_TOPIC, TASKHERALD_INTERVAL, TASKHERALD_STATE_FILE.
 - **FR-011**: System MUST use empty string for missing project or due fields in notification message format: "Project:%project% %description% Due:%due%".
 
-### Key Entities *(include if feature involves data)*
+### Key Entities _(include if feature involves data)_
 
 - **Task**: Represents a Taskwarrior task with UDAs: notification_date (datetime), taskherald_notified (timestamp), ntfy_topic (string)
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 
@@ -149,7 +149,7 @@ As a user, I want to configure custom ntfy.sh server and default topic, so that 
 
 ## Constitution Alignment
 
-*GATE: Must verify compliance with TaskHerald Constitution v1.1.0 before finalizing spec.*
+_GATE: Must verify compliance with TaskHerald Constitution v1.1.0 before finalizing spec._
 
 - **Service Reliability**: Service runs as systemd service with automatic recovery; notifications ensure continuous task awareness.
 - **CLI Contract**: All Taskwarrior interactions use `task export` command with proper parsing.
