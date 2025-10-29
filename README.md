@@ -14,6 +14,58 @@ A single-user systemd service that monitors Taskwarrior tasks and sends notifica
 
 ## Installation
 
+### Option 1: Nix Flake (Recommended)
+
+TaskHerald can be installed using Nix flakes with home-manager for declarative configuration.
+
+1. Add TaskHerald to your flake inputs:
+
+```nix
+{
+  inputs = {
+    # ... your other inputs
+    taskherald.url = "github:frigidplatypus/taskherald";
+  };
+}
+```
+
+2. Configure home-manager:
+
+```nix
+{ config, ... }:
+
+{
+  imports = [
+    # ... your other imports
+  ];
+
+  # Import the TaskHerald home-manager module
+  home-manager.users.youruser = { config, ... }: {
+    imports = [
+      # ... your other imports
+    ];
+
+    # TaskHerald service configuration
+    services.taskherald = {
+      enable = true;
+      settings = {
+        ntfy_topic = "my-task-notifications";
+        ntfy_server = "https://ntfy.sh";  # Optional
+        taskherald_interval = 60;          # Optional
+      };
+    };
+  };
+}
+```
+
+3. Apply configuration:
+
+```bash
+home-manager switch
+```
+
+### Option 2: Manual Installation
+
 1. Build the binary:
    ```bash
    go build -o taskherald ./src
