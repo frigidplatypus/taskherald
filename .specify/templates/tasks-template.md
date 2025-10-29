@@ -68,6 +68,12 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] T007 Create base models/entities that all stories depend on
 - [ ] T008 Configure error handling and logging infrastructure
 - [ ] T009 Setup environment configuration management
+- [ ] T010 Setup systemd service configuration for Service Reliability
+- [ ] T011 Implement Taskwarrior CLI integration with validation for CLI Contract
+- [ ] T012 Configure least privilege execution for Security
+- [ ] T013 Setup structured logging with timestamps for Observability
+- [ ] T014 Review feature scope for Simplicity
+- [ ] T015 Verify deployment constraints (Go, systemd, Taskwarrior CLI, ntfy.sh only)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 

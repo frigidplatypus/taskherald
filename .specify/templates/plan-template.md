@@ -31,7 +31,12 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- **Service Reliability**: Design must include systemd service integration and automatic failure recovery.
+- **CLI Contract**: All Taskwarrior interactions must use the `task` command with input/output validation.
+- **Security**: Implementation must operate with least privilege and avoid exposing sensitive data.
+- **Observability**: All actions must be logged with timestamps; errors must be actionable.
+- **Simplicity**: Feature set must remain minimal, avoiding unnecessary complexity.
+- **Deployment Constraints**: Only Go, systemd, Taskwarrior CLI, and ntfy.sh for notifications permitted; external network access limited to ntfy.sh.
 
 ## Project Structure
 
