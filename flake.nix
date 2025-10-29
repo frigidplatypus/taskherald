@@ -21,6 +21,12 @@
 
             vendorHash = "sha256-DD0C5oV44BNAKxStrVYm8KhttUSoJBAdvZlyuxq6Cqs=";
 
+            subPackages = [ "src" ];
+
+            postInstall = ''
+              mv $out/bin/src $out/bin/taskherald
+            '';
+
             meta = {
               description = "Taskwarrior notification service";
               license = pkgs.lib.licenses.mit;
@@ -66,7 +72,7 @@
 
                 Service = {
                   Type = "simple";
-                  ExecStart = "${self.packages.${pkgs.system}.taskherald}/bin/src";
+                  ExecStart = "${self.packages.${pkgs.system}.taskherald}/bin/taskherald";
                   Environment = [
                     "NTFY_TOPIC=${config.services.taskherald.settings.ntfy_topic}"
                     "NTFY_SERVER=${config.services.taskherald.settings.ntfy_server}"
