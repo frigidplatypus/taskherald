@@ -48,4 +48,6 @@
     enable = true;
     enableHardeningWorkaround = true;
   };
+  dotenv.enable = true;
+
 }
