@@ -12,47 +12,27 @@ func HandleStartup(config *Config) {
 		return
 	}
 
-	// Log up to 10 tasks
-	count := len(tasks)
-	if count > 10 {
-		count = 10
-	}
-	for i := 0; i < count; i++ {
-		LogInfo(fmt.Sprintf("Task: %s - %s", tasks[i].UUID, tasks[i].Description))
-	}
-	if len(tasks) == 0 {
-		LogInfo("No tasks with notification_date found")
-	}
-
-	// Send summary for past 7 days unsent
-	SendStartupSummary(config, tasks)
-}
-
-func SendStartupSummary(config *Config, tasks []Task) {
-	sevenDaysAgo := time.Now().Add(-7 * 24 * time.Hour)
-	var summaryTasks []Task
+	now := time.Now()
+	// Log up to 10 tasks with future notification dates
+	count := 0
 	for _, task := range tasks {
-		if task.UDAs["notification_date"] != "" {
-			notifyTime, err := time.Parse(time.RFC3339, task.UDAs["notification_date"])
+		if count >= 10 {
+			break
+		}
+		if task.NotificationDate != "" {
+			notifyTime, err := time.Parse("20060102T150405Z", task.NotificationDate)
 			if err != nil {
 				continue
 			}
-			if notifyTime.After(sevenDaysAgo) && task.UDAs["taskherald_notified"] == "" {
-				summaryTasks = append(summaryTasks, task)
+			if notifyTime.After(now) {
+				localTime := notifyTime.Local()
+				notifyDate := localTime.Format("2006-01-02 15:04:05")
+				LogInfo(fmt.Sprintf("Task: %s - %s (notify: %s)", task.UUID, task.Description, notifyDate))
+				count++
 			}
 		}
 	}
-
-	if len(summaryTasks) > 0 {
-		summaryMsg := "Missed notifications:\n"
-		for _, t := range summaryTasks {
-			summaryMsg += fmt.Sprintf("- %s\n", t.Description)
-		}
-		// Send summary via ntfy
-		summaryTask := Task{Description: summaryMsg}
-		err := SendNotification(config, summaryTask)
-		if err != nil {
-			LogError(err)
-		}
+	if count == 0 {
+		LogInfo("No tasks with future notification dates found")
 	}
 }
