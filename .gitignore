@@ -51,3 +51,6 @@ devenv.local.yaml
 .stfolder/
 *.sync-conflict-*
 *.tmp
+
+result/
+result
