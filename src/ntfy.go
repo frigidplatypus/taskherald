@@ -40,7 +40,7 @@ func formatMessage(task Task) string {
 }
 
 func mapPriority(p string) string {
-	switch p {
+	switch strings.ToUpper(p) {
 	case "H":
 		return "5"
 	case "M":
