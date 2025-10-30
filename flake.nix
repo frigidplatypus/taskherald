@@ -108,6 +108,7 @@
               };
             };
           };
+          default = self.homeManagerModules.taskherald;
         };
       };
 }
