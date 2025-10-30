@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"heckel.io/ntfy/client"
 )
@@ -23,15 +24,19 @@ func SendNotification(config *Config, task Task) error {
 }
 
 func formatMessage(task Task) string {
-	project := task.Project
-	if project == "" {
-		project = ""
+	var parts []string
+
+	if task.Project != "" {
+		parts = append(parts, fmt.Sprintf("Project:%s", task.Project))
 	}
-	due := task.Due
-	if due == "" {
-		due = ""
+
+	parts = append(parts, task.Description)
+
+	if task.Due != "" {
+		parts = append(parts, fmt.Sprintf("Due:%s", task.Due))
 	}
-	return fmt.Sprintf("Project:%s %s Due:%s", project, task.Description, due)
+
+	return strings.Join(parts, " ")
 }
 
 func mapPriority(p string) string {
