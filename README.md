@@ -53,6 +53,7 @@ TaskHerald can be installed using Nix flakes with home-manager for declarative c
         # ntfy_topic_file = "/path/to/secret/topic";  # Alternative: read from file
         ntfy_server = "https://ntfy.sh";  # Optional
         taskherald_interval = 60;          # Optional
+        taskwarriorPackage = pkgs.taskwarrior;  # Optional, defaults to pkgs.taskwarrior
       };
     };
   };
@@ -100,6 +101,7 @@ TaskHerald is configured via environment variables. Set them in the systemd serv
 | `NTFY_SERVER`         | URL of the ntfy server to send notifications to | `https://ntfy.sh`                                 | `https://ntfy.example.com` |
 | `NTFY_TOPIC`          | Default topic for notifications                 | `taskherald` (or `taskherald-RANDOM` for ntfy.sh) | `my-tasks`                 |
 | `TASKHERALD_INTERVAL` | How often to check for due tasks (in seconds)   | `60`                                              | `30`                       |
+| `TASK_BINARY`         | Path to the taskwarrior binary                  | `task`                                            | `/usr/bin/task`            |
 
 ### Setting Environment Variables
 

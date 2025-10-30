@@ -67,6 +67,12 @@
                   default = 60;
                   description = "Check interval in seconds";
                 };
+
+                taskwarriorPackage = lib.mkOption {
+                  type = lib.types.package;
+                  default = pkgs.taskwarrior3;
+                  description = "The taskwarrior package to use for the binary path";
+                };
               };
             };
 
@@ -91,6 +97,7 @@
                     [
                       "NTFY_SERVER=${config.services.taskherald.settings.ntfy_server}"
                       "TASKHERALD_INTERVAL=${toString config.services.taskherald.settings.taskherald_interval}"
+                      "TASK_BINARY=${config.services.taskherald.settings.taskwarriorPackage}/bin/task"
                     ]
                     (lib.mkIf (config.services.taskherald.settings.ntfy_topic != null) [
                       "NTFY_TOPIC=${config.services.taskherald.settings.ntfy_topic}"

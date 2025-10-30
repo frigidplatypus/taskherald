@@ -17,8 +17,8 @@ type Task struct {
 	TaskheraldNotified string            `json:"taskherald_notified,omitempty"`
 }
 
-func GetTasksWithNotifications() ([]Task, error) {
-	cmd := exec.Command("task", "notification_date.any:", "export")
+func GetTasksWithNotifications(taskBinary string) ([]Task, error) {
+	cmd := exec.Command(taskBinary, "notification_date.any:", "export")
 	output, err := cmd.Output()
 	if err != nil {
 		return nil, err
@@ -33,8 +33,8 @@ func GetTasksWithNotifications() ([]Task, error) {
 	return tasks, nil
 }
 
-func UpdateTaskNotified(uuid string) error {
+func UpdateTaskNotified(taskBinary, uuid string) error {
 	// Update the UDA via task command
-	cmd := exec.Command("task", uuid, "modify", "taskherald_notified:now")
+	cmd := exec.Command(taskBinary, uuid, "modify", "taskherald_notified:now")
 	return cmd.Run()
 }

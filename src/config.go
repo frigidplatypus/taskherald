@@ -12,12 +12,15 @@ type Config struct {
 	NtfyServer         string
 	NtfyTopic          string
 	TaskHeraldInterval time.Duration
+	TaskBinary         string
 }
 
 func LoadConfig() (*Config, error) {
 	config := &Config{
 		NtfyServer: ensureProtocol(getEnv("NTFY_SERVER", "https://ntfy.sh")),
 	}
+
+	config.TaskBinary = getEnv("TASK_BINARY", "task")
 
 	// Set topic: check file first, then env var, then generate random topic for default server
 	topicFile := os.Getenv("NTFY_TOPIC_FILE")

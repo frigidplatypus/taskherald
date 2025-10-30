@@ -6,7 +6,7 @@ import (
 )
 
 func HandleStartup(config *Config) {
-	tasks, err := GetTasksWithNotifications()
+	tasks, err := GetTasksWithNotifications(config.TaskBinary)
 	if err != nil {
 		LogError(err)
 		return

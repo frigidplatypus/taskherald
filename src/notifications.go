@@ -6,7 +6,7 @@ import (
 )
 
 func CheckAndNotify(config *Config) {
-	tasks, err := GetTasksWithNotifications()
+	tasks, err := GetTasksWithNotifications(config.TaskBinary)
 	if err != nil {
 		LogError(err)
 		return
@@ -23,7 +23,7 @@ func CheckAndNotify(config *Config) {
 				continue
 			}
 			LogInfo(fmt.Sprintf("Notification sent, marking task %s as notified", task.Description))
-			err = UpdateTaskNotified(task.UUID)
+			err = UpdateTaskNotified(config.TaskBinary, task.UUID)
 			if err != nil {
 				LogError(fmt.Errorf("failed to mark task %s as notified: %w", task.Description, err))
 			}
